@@ -35,11 +35,11 @@
 
   /* ── HERO ── */
   .hero{
-    min-height:100vh;
+    min-height:auto;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
-    padding:5vh 6vw;
+    gap:2.5vh;
+    padding:4vh 6vw 5vh;
   }
 
   .hero-nav{
@@ -299,10 +299,12 @@
 
   /* ── MOBILE ── */
   @media (max-width: 600px){
-    .hero{ padding:3vh 5vw; min-height:auto; padding-bottom:5vh; }
+    .hero{ padding:3vh 5vw 4vh; gap:2vh; }
     .hero-wordmark{ font-size:clamp(2.8rem, 13vw, 4rem); }
     .hero-tag{ display:none; }
     .hero-scroll{ display:none; }
+    .hero-nav{ justify-content:flex-end; }
+    .hero-bottom{ flex-direction:column; gap:0.4rem; }
     .gallery-section{ padding:3vh 5vw 8vh; }
     .two-col{ grid-template-columns:1fr; }
     .info-row{ grid-template-columns:1fr; margin:0 5vw 8vh; }
