@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for erin-rose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff9f2;
+    --lav-1:#c9b3ec;
+    --lav-2:#9d7cd0;
+    --lav-3:#e6dafb;
+    --orchid:#e8a9d9;
+    --leaf:#8fc19c;
+    --plum:#3d2645;
+    --plum-soft:#6b5478;
+    --gold:#e9c46a;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--plum);
+    font-family:'Nunito', sans-serif;
+    text-transform:lowercase;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Fredoka', sans-serif;
+    text-transform:lowercase;
+    margin:0;
+  }
+
+  .placeholder{
+    font-style:italic;
+    color:var(--plum-soft);
+    border-bottom:2px dashed var(--lav-2);
+    padding-bottom:2px;
+  }
+
+  /* ---------------- GIFT SECTION ---------------- */
+
+  #gift-section{
+    position:relative;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem;
+    background:
+      radial-gradient(circle at 25% 25%, rgba(201,179,236,0.25), transparent 45%),
+      radial-gradient(circle at 75% 75%, rgba(232,169,217,0.2), transparent 45%),
+      var(--cream);
+    overflow:hidden;
+  }
+
+  .eyebrow{
+    display:inline-block;
+    background:var(--plum);
+    color:var(--cream);
+    padding:0.4rem 1rem;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.8rem;
+    margin-bottom:2rem;
+  }
+
+  #gift-box{
+    position:relative;
+    width:140px;
+    height:110px;
+    cursor:pointer;
+    transition:transform 0.25s ease;
+    z-index:5;
+  }
+  #gift-box:hover{ transform:translateY(-4px) scale(1.03); }
+
+  .box-base{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:78px;
+    background:var(--lav-2);
+    border-radius:8px;
+    box-shadow:0 10px 0 rgba(61,38,69,0.12);
+  }
+  .box-lid{
+    position:absolute;
+    top:22px;
+    left:-6px;
+    width:calc(100% + 12px);
+    height:26px;
+    background:var(--lav-1);
+    border-radius:6px;
+    transition:transform 0.5s cubic-bezier(.34,1.56,.64,1), opacity 0.5s ease;
+    transform-origin:50% 100%;
+  }
+  .ribbon-v{
+    position:absolute;
+    top:0;
+    left:50%;
+    width:16px;
+    height:100%;
+    background:var(--orchid);
+    transform:translateX(-50%);
+  }
+  .ribbon-bow{
+    position:absolute;
+    top:-14px;
+    left:50%;
+    transform:translateX(-50%);
+    width:40px;
+    height:24px;
+  }
+  .ribbon-bow::before, .ribbon-bow::after{
+    content:'';
+    position:absolute;
+    top:0;
+    width:18px;
+    height:20px;
+    background:var(--orchid);
+    border-radius:50% 50% 50% 0;
+  }
+  .ribbon-bow::before{ left:0; transform:rotate(-20deg); }
+  .ribbon-bow::after{ right:0; border-radius:50% 50% 0 50%; transform:rotate(20deg); }
+
+  #gift-box.opened .box-lid{
+    transform:translateY(-60px) rotate(-35deg);
+    opacity:0;
+  }
+  #gift-box.opened .box-base{
+    animation:box-shrink 0.6s ease 0.35s forwards;
+  }
+  @keyframes box-shrink{
+    to{ transform:scale(0.85); opacity:0; }
+  }
+
+  .tap-label{
+    margin-top:1.6rem;
+    font-weight:700;
+    color:var(--lav-2);
+    font-size:0.95rem;
+    transition:opacity 0.4s ease;
+  }
+  .tap-label.hide{ opacity:0; }
+
+  .hero-caption{
+    margin-top:1.2rem;
+    font-size:1.05rem;
+    font-weight:600;
+    color:var(--plum-soft);
+    max-width:30ch;
+  }
+
+  /* ---------------- FLOWER BURST OVERLAY ---------------- */
+
+  #flower-overlay{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:50;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+  #flower-overlay.show{ opacity:1; }
+  #flower-overlay.fade{ opacity:0; }
+
+  .flower{
+    position:absolute;
+    width:60px;
+    height:60px;
+    opacity:0;
+    animation-name:burst-fly;
+    animation-duration:0.85s;
+    animation-timing-function:cubic-bezier(.13,.78,.19,1);
+    animation-fill-mode:forwards;
+  }
+
+  @keyframes burst-fly{
+    0%{
+      transform:translate(var(--sx), var(--sy)) scale(0) rotate(0deg);
+      opacity:0;
+    }
+    12%{
+      opacity:1;
+    }
+    55%{
+      transform:translate(calc(var(--sx) * 0.12), calc(var(--sy) * 0.12)) scale(var(--overshoot)) rotate(var(--rot));
+      opacity:1;
+    }
+    100%{
+      transform:translate(0,0) scale(var(--scale)) rotate(var(--rot));
+      opacity:1;
+    }
+  }
+
+  .flower.settle{
+    animation-name:burst-fly, flutter;
+    animation-duration:0.85s, 3s;
+    animation-timing-function:cubic-bezier(.13,.78,.19,1), ease-in-out;
+    animation-delay:0s, 0.85s;
+    animation-iteration-count:1, infinite;
+    animation-direction:normal, alternate;
+  }
+
+  @keyframes flutter{
+    0%{ transform:translate(0,0) scale(var(--scale)) rotate(var(--rot)); }
+    100%{ transform:translate(0, 10px) scale(var(--scale)) rotate(calc(var(--rot) + 8deg)); }
+  }
+
+  #shockwave{
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(230,218,251,0.7) 35%, rgba(230,218,251,0) 70%);
+    transform:translate(-50%,-50%) scale(0);
+    opacity:0;
+    z-index:55;
+    pointer-events:none;
+  }
+  #shockwave.pop{
+    animation:shockwave-pop 0.7s cubic-bezier(.13,.78,.19,1) forwards;
+  }
+  @keyframes shockwave-pop{
+    0%{ transform:translate(-50%,-50%) scale(0); opacity:1; }
+    70%{ opacity:0.55; }
+    100%{ transform:translate(-50%,-50%) scale(38); opacity:0; }
+  }
+
+  .petal{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:22px;
+    height:34px;
+    background:var(--lav-1);
+    border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    transform-origin:50% 100%;
+  }
+  .flower-center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:12px;
+    height:12px;
+    background:var(--gold);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    z-index:2;
+  }
+
+  .flower.tulip .petal{
+    background:var(--lav-2);
+    width:16px;
+    height:36px;
+    border-radius:50% 50% 50% 50% / 70% 70% 20% 20%;
+  }
+  .flower.tulip .flower-center{ display:none; }
+
+  .flower.orchid .petal{ background:var(--orchid); }
+  .flower.orchid .flower-center{ background:var(--lav-3); }
+
+  #reveal-text{
+    position:fixed;
+    inset:0;
+    z-index:60;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 1s ease;
+    padding:2rem;
+  }
+  #reveal-text.show{ opacity:1; }
+
+  #reveal-text .line1{
+    font-family:'Dancing Script', cursive;
+    font-weight:700;
+    font-size:clamp(2.6rem, 8vw, 5rem);
+    color:var(--plum);
+    text-shadow:0 2px 18px rgba(255,249,242,0.9), 0 0 40px rgba(255,249,242,0.7);
+  }
+  #reveal-text .line2{
+    margin-top:0.6rem;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    font-size:1rem;
+    letter-spacing:0.08em;
+    color:var(--plum-soft);
+    text-shadow:0 2px 12px rgba(255,249,242,0.9);
+  }
+
+  /* ---------------- CONTENT ---------------- */
+
+  #content{
+    position:relative;
+    padding:5rem 1.5rem 2rem;
+    max-width:920px;
+    margin:0 auto;
+  }
+
+  .ambient-petal{
+    position:absolute;
+    width:26px;
+    height:26px;
+    opacity:0.35;
+    animation:drift 14s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes drift{
+    0%{ transform:translateY(0) rotate(0deg); }
+    100%{ transform:translateY(-120vh) rotate(360deg); }
+  }
+
+  .section-title{
+    text-align:center;
+    font-size:clamp(1.7rem, 4vw, 2.4rem);
+    font-weight:600;
+    margin-bottom:0.5rem;
+  }
+  .section-sub{
+    text-align:center;
+    color:var(--plum-soft);
+    font-weight:600;
+    margin-bottom:3rem;
+  }
+
+  .notes{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:1.4rem;
+    margin-bottom:8rem;
+  }
+
+  .note{
+    background:var(--lav-3);
+    border-radius:20px;
+    padding:1.8rem 1.5rem;
+    text-align:center;
+    box-shadow:0 8px 0 rgba(61,38,69,0.08);
+  }
+  .note .icon{ font-size:1.8rem; margin-bottom:0.6rem; }
+  .note h3{ font-size:1.1rem; font-weight:600; margin-bottom:0.6rem; }
+  .note p{ font-size:0.92rem; line-height:1.5; margin:0; }
+
+  .gallery-wrap{ margin-bottom:6rem; }
+
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:1.5rem;
+  }
+
+  .photo-slot{
+    aspect-ratio:1/1;
+    border-radius:18px;
+    border:3px dashed var(--lav-2);
+    background:repeating-linear-gradient(135deg, rgba(157,124,208,0.08) 0 10px, transparent 10px 20px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0.3rem;
+    text-align:center;
+    padding:0.8rem;
+  }
+  .photo-slot .icon{ font-size:1.6rem; }
+  .photo-slot small{ color:var(--plum-soft); font-weight:700; font-size:0.75rem; }
+
+  .final-message{
+    text-align:center;
+    max-width:50ch;
+    margin:0 auto 5rem;
+    font-size:1.15rem;
+    line-height:1.7;
+  }
+
+  #letter{
+    padding-top:1rem;
+    margin-bottom:6rem;
+  }
+  .letter-paper{
+    max-width:520px;
+    min-height:340px;
+    margin:0 auto;
+    background:#fffdf8;
+    border-radius:10px;
+    box-shadow:0 18px 40px rgba(61,38,69,0.12), 0 2px 0 rgba(61,38,69,0.06);
+    padding:2.6rem 2.5rem 2rem;
+    position:relative;
+    text-align:left;
+    color:var(--plum);
+    font-size:1rem;
+    line-height:2rem;
+    white-space:pre-wrap;
+    background-image:repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(2rem - 1px),
+      rgba(157,124,208,0.25) calc(2rem - 1px),
+      rgba(157,124,208,0.25) 2rem
+    );
+    background-position:0 2.6rem;
+    background-repeat:repeat-y;
+  }
+  .letter-caption{
+    text-align:center;
+    margin-top:1rem;
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--plum-soft);
+    font-style:italic;
+  }
+
+  footer{
+    text-align:center;
+    padding:3rem 1.5rem 4rem;
+  }
+  .signature{
+    font-family:'Fredoka', sans-serif;
+    font-size:1.3rem;
+    color:var(--lav-2);
+    margin-top:0.5rem;
+  }
+  .heart-row{
+    margin-top:1rem;
+    font-size:1.2rem;
+    letter-spacing:0.3rem;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+#flower-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:200;background:transparent;}
+</style>
+</head>
+<body>
+
+<section id="gift-section">
+  <span class="eyebrow">yo nigga</span>
+  <div id="gift-box" onclick="openGift()">
+    <div class="box-lid">
+      <div class="ribbon-bow"></div>
+    </div>
+    <div class="box-base">
+      <div class="ribbon-v"></div>
+    </div>
+  </div>
+  <p class="tap-label" id="tapLabel">tap the gift nigga</p>
+  <p class="hero-caption">a little something for our gay journey so far</p>
+</section>
+
+<div id="flower-overlay"></div>
+<div id="shockwave"></div>
+<video id="flower-video" playsinline muted><source src="flowuh.webm" type="video/webm"></video>
+<div id="reveal-text">
+  <div class="line1">from me to you, babygirl.</div>
+  <div class="line2">the happiest 3 months of my life</div>
+</div>
+
+<section id="content">
+
+  <h2 class="section-title">a couple things i love about my babygirl</h2>
+  
+
+  <div class="notes">
+    <div class="note">
+      <div class="icon">😂</div>
+      <h3>her jokes</h3>
+      <p class="placeholder">even if they are a little racist and would get her cancelled! VTuber Arc needs to come so i can see you adapt to the wild frfr but i love the out of pocket jokes they're my fav LOL</p>
+    </div>
+    <div class="note">
+      <div class="icon">🥰</div>
+      <h3>how cute she is</h3>
+      <p class="placeholder">every single time you put up a heart symbol, wave, ask me for something, say thank you and most importantly babygirl, every single time your beautiful being smiles at me &lt;3</p>
+    </div>
+    <div class="note">
+      <div class="icon">✨</div>
+      <h3>how happy she makes me</h3>
+      <p class="placeholder">you wanna watch vinland saga for meeee its so cute and it makes me so happy heuehe but also you make me so happy every single time you say you love me. i wake up every morning feeling loved and i am so thankful for it, i can't wait until i hold you in my arms my pretty baby</p>
+    </div>
+      </div>
+
+  <div class="gallery-wrap" id="gallery">
+    <h2 class="section-title">my fav images from this month with you <3</h2>
+    <div class="gallery">
+      <img src="1.jpg" alt="us" style="width:100%;height:100%;
+    object-fit:cover;border-radius:18px;">
+      <img src="2.jpg" alt="us" style="width:100%;height:100%;
+    object-fit:cover;border-radius:18px;">
+      <img src="3.png" alt="us" style="width:100%;height:100%;
+    object-fit:cover;border-radius:18px;">
+      <img src="4.png" alt="us" style="width:100%;height:100%;
+    object-fit:cover;border-radius:18px;">
+      <img src="5.jpg" alt="us" style="width:100%;height:500px;object-fit:cover;border-radius:18px;grid-column:1 / -1;">
+      
+
+    </div>
+  </div>
+
+  <div id="letter">
+    <h2 class="section-title">a letter for you</h2>
+    <p class="section-sub">&nbsp;</p>
+    <div class="letter-paper">Oh my dearly beloved.. <3 3 months with you has felt like a year. I don't wanna remember what life was like before you and I can't imagine a life ever without you. This month we overcame so many challenges and I am so proud of you Erin-Rose. I'm so proud of you for making it this month and I'm so glad I was able to help and make the month a little nicer :) It hasn't been easy with your mother home all the time but you did it babygirl, and you will finish this month <3 wont daddy's little princess? We did so many cute gay and silly things this month like finish the final 5 minutes of reanimal LOL, be soooooo racist towards eachother oh mygoodness ehuhe but also cute things like matching on VR Chat heuh (we are never playing that shit again #trauma), but don't worry cos we alsooooooooooo GOT MARRIED ON SKY AND DID A WHOLE ASS PHOTOSHOOT LIKE WUHHH HELLO?? That was soooo random and cute and spontaneous heueehueh I was so smiley that night sobsobsobsob sorry I cant use emojis here oh ymgoodness. You deserve every 'I love you'. You deserve every gift daddy buys you/ You deserve every minute of patience from the love of your life. You deserve to be understood when things are bad instead of putting distance between us. You are so beautiful and I fell in love with you oh so long ago my baby. I always tell you this heuhe but I fell in love with your heart so long ago my baby, I felt like you gave so much positivity out into the world towards other people and I just knew that you yourself deserved that kind of positivity too, I couldn't bare the idea of you being anything other than happy and i'm talking about when we were just friends. I fell in love with you so easily and I keep falling for you so much more as the months follow us <3 I love your hair, I love your smile, I love your silly faces, I love your nose that im gonna noseynoseyyyy all the time, I love your forehead that im gonna put against mine ehueh, I love your mouth that ima learn how to kiss hella, I love your ears that im gonna let my thumbs feel when I hold your head by the side, I love your beautiful brown eyes that I'm gonna stare into all the time, I love your eyebrows that complement your face so perfectly, I love your symmetrical moles that i'm gonna kiss whenever I see, I love your legs that i'm gonna kiss top to bottom, I love your arms that i'm gonna hold so tight, I love your hands that you call rough.. that i'm gonna hold anyway <3 I love you Erin-Rose. All of you. You are my puppy, my babygirl, mine. I will always look after you and try my hardest to make you happy. I'm so sure about you Erin-Rose. Even the 'bad days' are good with you. I'll go as far as the world takes me to be with you. I love you infinity my sweet girl.</div>
+    <p class="letter-caption">i wish i could create more words to describe the depths of your beauty</p>
+  </div>
+
+  <footer>
+    <h2>the best 3 months of my life erin-rose, lets love eachother for the rest of our lives <3</h2>
+    <div class="signature">love, <span class="placeholder">daddy<3</span></div>
+    <div class="heart-row">💜 🩷 🤍</div>
+  </footer>
+
+</section>
+
+<script>
+  const LAV_COLORS = ['var(--lav-1)', 'var(--lav-2)', 'var(--lav-3)'];
+
+  function makeFlower(kind){
+    const el = document.createElement('div');
+    el.className = 'flower ' + kind;
+
+    const petalCount = 5;
+    for(let i=0;i<petalCount;i++){
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      const angle = (360/petalCount)*i;
+      petal.style.transform = `translate(-50%,-100%) rotate(${angle}deg)`;
+      if(kind === 'orchid'){
+        petal.style.background = i % 2 === 0 ? 'var(--orchid)' : 'var(--lav-1)';
+      }
+      el.appendChild(petal);
+    }
+
+    const center = document.createElement('div');
+    center.className = 'flower-center';
+    el.appendChild(center);
+
+    return el;
+  }
+
+  function spawnFlowers(overlay, originX, originY, count, delayRange, delayOffset){
+    for(let i=0;i<count;i++){
+      const kind = Math.random() > 0.45 ? 'tulip' : 'orchid';
+      const flower = makeFlower(kind);
+      flower.classList.add('settle');
+
+      // scatter across (and slightly beyond) the full viewport so coverage
+      // reaches every edge and corner, not just the center
+      const targetX = (Math.random() * 1.2 - 0.1) * window.innerWidth;
+      const targetY = (Math.random() * 1.2 - 0.1) * window.innerHeight;
+      const scale = 0.6 + Math.random()*1.3;
+      const overshoot = scale * (1.15 + Math.random()*0.15);
+      const rot = (Math.random()*720)-360;
+      const delay = delayOffset + Math.random()*delayRange;
+
+      flower.style.left = targetX + 'px';
+      flower.style.top = targetY + 'px';
+      flower.style.zIndex = Math.random() > 0.5 ? 2 : 1;
+      flower.style.setProperty('--sx', (originX - targetX) + 'px');
+      flower.style.setProperty('--sy', (originY - targetY) + 'px');
+      flower.style.setProperty('--scale', scale);
+      flower.style.setProperty('--overshoot', overshoot);
+      flower.style.setProperty('--rot', rot + 'deg');
+      flower.style.animationDelay = delay + 'ms, ' + (delay + 850) + 'ms';
+
+      overlay.appendChild(flower);
+    }
+  }
+
+  function openGift(){
+    const box = document.getElementById('gift-box');
+    const tapLabel = document.getElementById('tapLabel');
+    const overlay = document.getElementById('flower-overlay');
+    const giftSection = document.getElementById('gift-section');
+    const revealText = document.getElementById('reveal-text');
+    const shockwave = document.getElementById('shockwave');
+
+    if(box.classList.contains('opened')) return;
+    box.classList.add('opened');
+    tapLabel.classList.add('hide');
+
+    const rect = giftSection.getBoundingClientRect();
+    const originX = rect.width/2;
+    const originY = rect.height/2;
+
+    const video=document.getElementById('flower-video');
+    video.style.display='block';
+    video.currentTime=0;
+    video.play();
+
+    video.onended=()=>{
+      video.style.display='none';
+
+      // show the message once the video has actually finished — this is
+      // now the ONLY place that adds .show, so it can't get re-triggered
+      // by a separate timer running on its own clock
+      revealText.classList.add('show');
+
+      setTimeout(()=>{
+        revealText.classList.remove('show');
+      }, 2500);
+
+      setTimeout(()=>{
+        document.getElementById('gallery').scrollIntoView({behavior:'smooth'});
+      }, 3500);
+
+      setTimeout(()=>{
+        document.getElementById('letter').scrollIntoView({behavior:'smooth'});
+      }, 7500);
+    };
+  }
+</script>
+
+<!--
+  EDITING NOTES FOR erin-rose'S PAGE:
+
+  1. Anything wrapped in [brackets] is a placeholder — replace the bracketed
+     text with your own words. You can remove the "placeholder" class if you
+     want to drop the dashed italic styling.
+
+  2. To add a photo: find a <div class="photo-slot">...</div> in the
+     gallery, and replace its contents with:
+       <img src="your-photo.jpg" alt="my fav photos this month hehehehe" style="width:100%;height:100%;
+       object-fit:cover;border-radius:18px;">
+     Keep photo files in the same folder as this html file. Add or remove
+     photo-slot divs from the .gallery grid as needed.
+
+  3. To add more "notes" cards, copy one whole <div class="note">...</div>
+     block and paste it inside <div class="notes">.
+
+  4. The gift box opens on click, ~130 lavender tulips/orchids bloom out to
+     cover the whole screen, "from me to you, babygirl" fades in on top,
+     then it all fades away and the page auto-scrolls down to the photos —
+     and a few seconds later, down again to the blank letter. Adjust the
+     numbers inside spawnFlowers(...) calls in the script to add more or
+     fewer flowers, and the setTimeout delays to change the pacing.
+
+  5. The letter section is intentionally empty (just lined paper) since you
+     haven't written it yet. When you're ready, add your text inside the
+     <div class="letter-paper"></div> element.
+-->
+
+</body>
+</html>
