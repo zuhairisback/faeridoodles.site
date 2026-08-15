@@ -216,23 +216,11 @@
     gap:1rem;
   }
 
-  .piece-index{
-    font-size:0.75rem;
-    color:var(--accent);
-  }
-
   .piece-title{
     font-family:'Fredoka', sans-serif;
     font-weight:600;
     font-size:clamp(1.3rem, 2.5vw, 1.9rem);
     margin-top:0.3rem;
-  }
-
-  .piece-meta{
-    text-align:right;
-    font-size:0.75rem;
-    color:var(--ink-dim);
-    line-height:1.8;
   }
 
   /* ---------- Footer ---------- */
@@ -515,10 +503,6 @@
       align-items:flex-start;
       gap:0.3rem;
     }
-
-    .piece-meta{
-      text-align:left;
-    }
   }
 </style>
 </head>
@@ -642,10 +626,9 @@
   // STEP 2: Add ONE new line to the "artworks" list below, following
   //         the exact same pattern as the others:
   //
-  //         { title: "your piece's name", year: "2026", src: "images/my_new_piece.jpg" },
+  //         { title: "your piece's name", src: "images/my_new_piece.jpg" },
   //
   //         - title: whatever you want the piece to be called
-  //         - year:  the year you made it (as text, in quotes)
   //         - src:   the path to the image file from step 1
   //
   //         Don't forget the comma "," at the end of the line if it's
@@ -653,8 +636,8 @@
   //
   // STEP 3: Save the file and refresh the page in your browser.
   //         Your new piece will appear automatically — no other
-  //         changes needed. It'll show up in the gallery, the side
-  //         index (on desktop), and get its own number automatically.
+  //         changes needed. It'll show up in the gallery and the
+  //         side index (on desktop).
   //
   // TIP: To REMOVE a piece, just delete its whole line.
   // TIP: To REORDER pieces, just move the lines up or down — they
@@ -663,14 +646,14 @@
   //      string ( src: "" ) and a placeholder box will show instead.
   // =================================================================
   const artworks = [
-    { title: "oni girl",      year: "2026", src: "images/oni_girl.jpg" },
-    { title: "self portrait", year: "2026", src: "images/self_portrait.jpg" },
-    { title: "elf girl",      year: "2025", src: "images/elf_girl.jpg" },
-    { title: "lady of thorns",year: "2025", src: "images/doodle.jpg" },
-    { title: "kiriko",        year: "2025", src: "images/kiriko.jpg" },
-    { title: "pixel art",     year: "2025", src: "images/pixel_lady.png" },
+    { title: "oni girl",      src: "images/oni_girl.jpg" },
+    { title: "self portrait", src: "images/self_portrait.jpg" },
+    { title: "elf girl",      src: "images/elf_girl.jpg" },
+    { title: "lady of thorns",src: "images/doodle.jpg" },
+    { title: "kiriko",        src: "images/kiriko.jpg" },
+    { title: "pixel art",     src: "images/pixel_lady.png" },
     // Add new pieces here, right above this line, like:
-    // { title: "new piece", year: "2026", src: "images/new_piece.jpg" },
+    // { title: "new piece", src: "images/new_piece.jpg" },
   ];
 
   const gallery = document.getElementById('gallery');
@@ -688,7 +671,7 @@
     piece.id = id;
 
     const frameInner = art.src
-      ? `<img src="${art.src}" alt="${art.title}, ${art.year}">`
+      ? `<img src="${art.src}" alt="${art.title}">`
       : `<div class="placeholder-art">[ image placeholder ]<br>replace via the "src" field<br>for "${art.title}" in the script</div>`;
 
     piece.innerHTML = `
@@ -697,10 +680,8 @@
       </div>
       <div class="piece-info">
         <div>
-          <div class="piece-index mono">${num} / ${String(artworks.length).padStart(2,'0')}</div>
           <div class="piece-title">${art.title}</div>
         </div>
-        <div class="piece-meta mono">${art.year}</div>
       </div>
     `;
     gallery.appendChild(piece);
@@ -708,7 +689,7 @@
     // Rail link
     const link = document.createElement('a');
     link.href = `#${id}`;
-    link.innerHTML = `<span class="dot"></span>${num} ${art.title}`;
+    link.innerHTML = `<span class="dot"></span>${art.title}`;
     rail.appendChild(link);
   });
 
