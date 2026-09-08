@@ -9,6 +9,12 @@
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 
+<!-- Preload the first gallery image so the browser can start
+     fetching it immediately, instead of waiting for the script
+     that builds the gallery to run. If you reorder the artworks
+     list below, update this to match the new first piece. -->
+<link rel="preload" as="image" href="images/oni_girl.jpg" fetchpriority="high">
+
 <!-- Open Graph / social preview -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="faeridoodles — Illustration &amp; Digital Art Portfolio">
@@ -24,7 +30,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600&family=Space+Mono:wght@400;500&display=optional" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600&family=Space+Mono:wght@400;500&display=optional"></noscript>
 <style>
   :root{
     --bg:#fff0f6;
@@ -703,8 +710,9 @@
     piece.className = 'piece';
     piece.id = id;
 
+    const isFirst = i === 0;
     const frameInner = art.src
-      ? `<img src="${art.src}" alt="${art.title}">`
+      ? `<img src="${art.src}" alt="${art.title}" ${isFirst ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async">`
       : `<div class="placeholder-art">[ image placeholder ]<br>replace via the "src" field<br>for "${art.title}" in the script</div>`;
 
     piece.innerHTML = `
