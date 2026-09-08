@@ -3,7 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artwork — Portfolio</title>
+<title>faeridoodles — Illustration &amp; Digital Art Portfolio</title>
+<meta name="description" content="Portfolio of illustration and digital art by erin-rose rigaud (faeridoodles). Based in Trinidad &amp; Tobago, available for commission.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="faeridoodles — Illustration &amp; Digital Art Portfolio">
+<meta property="og:description" content="Portfolio of illustration and digital art by erin-rose rigaud. Based in Trinidad &amp; Tobago, available for commission.">
+<meta property="og:image" content="https://faeridoodles.com/images/social-preview.jpg">
+<meta property="og:url" content="https://faeridoodles.com/">
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="faeridoodles — Illustration &amp; Digital Art Portfolio">
+<meta name="twitter:description" content="Portfolio of illustration and digital art by erin-rose rigaud. Based in Trinidad &amp; Tobago, available for commission.">
+<meta name="twitter:image" content="https://faeridoodles.com/images/social-preview.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,8 +30,9 @@
     --bg:#fff0f6;
     --bg-raised:#ffe1ee;
     --ink:#5c2a4d;
-    --ink-dim:#b5709e;
+    --ink-dim:#945b81;
     --accent:#ff4fa3;
+    --accent-text:#c13c7b;
     --violet:#ff85c0;
     --line:#ffc2e2;
   }
@@ -95,51 +114,30 @@
   }
   .header-meta a:hover{ text-decoration-color:var(--accent); }
 
+  .cta-button{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    background:var(--accent-text);
+    color:#fff0f6;
+    text-decoration:none;
+    padding:0.75rem 1.4rem;
+    border-radius:28px;
+    box-shadow:0 8px 20px rgba(255,79,163,0.3);
+    white-space:nowrap;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-  /* ---------- Index rail (desktop) ---------- */
+  .cta-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 26px rgba(255,79,163,0.4);
+  }
+
 
   .layout{
     display:grid;
-    grid-template-columns:200px 1fr;
+    grid-template-columns:1fr;
     gap:0;
-  }
-
-  .rail{
-    position:sticky;
-    top:0;
-    height:100vh;
-    padding:4vh 0 4vh 6vw;
-    border-right:none;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:0.9rem;
-  }
-
-  .rail a{
-    font-family:'Space Mono', monospace;
-    font-size:0.75rem;
-    color:var(--ink-dim);
-    text-decoration:none;
-    display:flex;
-    align-items:baseline;
-    gap:0.6rem;
-    transition:color 0.15s ease;
-  }
-
-  .rail a:hover, .rail a.active{
-    color:var(--ink);
-  }
-
-  .rail a .dot{
-    width:5px; height:5px; border-radius:50%;
-    background:var(--ink-dim);
-    flex-shrink:0;
-    transition:background 0.15s ease;
-  }
-
-  .rail a:hover .dot, .rail a.active .dot{
-    background:var(--accent);
   }
 
   /* ---------- Gallery ---------- */
@@ -427,9 +425,15 @@
     color:var(--accent);
   }
 
+  .info-row{
+    display:flex;
+    flex-direction:column;
+  }
+
   .info-section{
     padding:8vh 6vw;
     scroll-margin-top:1rem;
+    flex:1;
   }
 
   .info-section h2{
@@ -446,7 +450,7 @@
   }
 
   .info-section a{
-    color:var(--accent);
+    color:var(--accent-text);
     text-decoration:underline;
     text-underline-offset:3px;
   }
@@ -455,11 +459,6 @@
     outline:2px solid var(--accent);
     outline-offset:3px;
   }
-  @media (max-width: 900px){
-    .layout{ grid-template-columns:1fr; }
-    .rail{ display:none; }
-  }
-
   @media (max-width: 600px){
     header{ padding:3vh 5vw 1.5vh; }
     .header-row{ gap:0.6rem; align-items:flex-start; margin-top:0 !important; }
@@ -472,6 +471,7 @@
     .piece{ padding:2.5vh 5vw; gap:1rem; }
     .info-section{ padding:4vh 5vw; }
     footer{ flex-direction:column; align-items:flex-start; }
+    .cta-button{ padding:0.6rem 1.1rem; font-size:0.8rem; }
   }
 
   /* ---------- Desktop gallery: 3-column grid ---------- */
@@ -503,8 +503,38 @@
       align-items:flex-start;
       gap:0.3rem;
     }
+
+    .info-row{
+      flex-direction:row;
+      align-items:flex-start;
+    }
+
+    .info-section{
+      padding:8vh 3vw;
+    }
+
+    .info-section p{
+      max-width:none;
+    }
   }
 </style>
+
+<!--
+  ANALYTICS (optional, off by default):
+  This site doesn't track visitors right now. If you ever want simple,
+  privacy-friendly analytics, sign up for a free account at
+  https://plausible.io or https://www.goatcounter.com, then uncomment
+  and fill in a script tag like this:
+
+  <script defer data-domain="faeridoodles.com" src="https://plausible.io/js/script.js"></script>
+-->
+
+<!--
+  HTTPS: GitHub Pages issues a free HTTPS certificate for custom domains
+  automatically. To make sure it's active, go to your repo's
+  Settings → Pages → check "Enforce HTTPS". It can take a few minutes
+  to become available after a custom domain is first connected.
+-->
 </head>
 <body>
 
@@ -548,34 +578,38 @@
       Based in Trinidad &amp; Tobago / Available for commission<br>
       <a href="mailto:rosestarberry@gmail.com">rosestarberry@gmail.com</a>
     </div>
+    <a href="mailto:rosestarberry@gmail.com?subject=Commission%20inquiry" class="cta-button">Commission Me →</a>
   </div>
 </header>
 
 <div class="layout">
 
-  <nav class="rail" id="rail" aria-label="Artwork index"></nav>
-
   <main id="gallery"></main>
 
 </div>
 
-<section class="info-section" id="about">
-  <h2>About Me</h2>
-  <p>hiya my name is erin-rose rigaud and i am an aspiring concept artist with a strong secondary interest in voice acting :> art has been a constant part of my life since childhood. it has allowed me not only to express myself but also to bring to life the ideas that once existed only in my imagination. i hope that i can also give life to the art in your mind!</p>
-</section>
+<div class="info-row">
+  <section class="info-section" id="about">
+    <h2>About Me</h2>
+    <p>hiya my name is erin-rose rigaud and i am an aspiring concept artist with a strong secondary interest in voice acting :> art has been a constant part of my life since childhood. it has allowed me not only to express myself but also to bring to life the ideas that once existed only in my imagination. i hope that i can also give life to the art in your mind!</p>
+  </section>
 
-<section class="info-section" id="credentials">
-  <h2>Credentials</h2>
-  <p>first major: bachelor of fine arts in digital media arts.</p>
-</section>
+  <section class="info-section" id="credentials">
+    <h2>Credentials</h2>
+    <p>first major: bachelor of fine arts in digital media arts.</p>
+  </section>
 
-<section class="info-section" id="contact">
-  <h2>Contact Me</h2>
-  <p>for commissions, collabs, or just to say hi! please contact me at <a href="mailto:rosestarberry@gmail.com">rosestarberry@gmail.com</a>. or find me on social media below!</p>
-</section>
+  <section class="info-section" id="contact">
+    <h2>Contact Me</h2>
+    <p>for commissions, collabs, or just to say hi! please contact me at <a href="mailto:rosestarberry@gmail.com">rosestarberry@gmail.com</a>. or find me on social media below!</p>
+  </section>
+</div>
 
 <footer>
-  <div>© <span id="year"></span> faeridoodles. All artwork rights reserved.</div>
+  <div>
+    © <span id="year"></span> faeridoodles. All artwork rights reserved.
+    · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
+  </div>
   <div class="footer-links">
     <div class="socials">
       <a href="https://www.instagram.com/faeridoodles/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -657,7 +691,6 @@
   ];
 
   const gallery = document.getElementById('gallery');
-  const rail = document.getElementById('rail');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
 
@@ -685,12 +718,6 @@
       </div>
     `;
     gallery.appendChild(piece);
-
-    // Rail link
-    const link = document.createElement('a');
-    link.href = `#${id}`;
-    link.innerHTML = `<span class="dot"></span>${art.title}`;
-    rail.appendChild(link);
   });
 
   // Lightbox open (only if there's a real image)
@@ -713,20 +740,6 @@
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
-
-  // Active state in rail on scroll
-  const railLinks = Array.from(rail.querySelectorAll('a'));
-  const pieces = Array.from(document.querySelectorAll('.piece'));
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const link = rail.querySelector(`a[href="#${entry.target.id}"]`);
-      if (entry.isIntersecting) {
-        railLinks.forEach(l => l.classList.remove('active'));
-        link && link.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-40% 0px -40% 0px' });
-  pieces.forEach(p => observer.observe(p));
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
